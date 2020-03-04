@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 –*-
 '''
-抖音爬虫，现可以进行个人信息的爬取
+抖音爬虫，现可以进行个人信息的爬取以及某人下的视频
 作者：洪韬
 时间：2020/3/2
 '''
@@ -9,6 +9,7 @@ from pyquery import PyQuery as pq
 from docx.shared import Inches
 from docx import Document
 import requests
+import json
 import re
 import os
 
@@ -63,7 +64,8 @@ class DouYinCrawl:
         p.add_run(':' + num)
 
     # 得到某一个抖音号的信息
-    def get_info(self, link, path):
+    def get_info(self, id, path):
+        link = 'https://www.iesdouyin.com/share/user/' + str(id)
         response = requests.get(link, headers=self.__headers)
         html = pq(response.text)
         imgUrl = html('#pagelet-user-info > div.personal-card > div.info1 > span.author > img').attr('src')
@@ -110,46 +112,66 @@ class DouYinCrawl:
 
     # 不可用
     # 得到某个抖音号下的所有视频
-    def get_videos(self, link):
+    def get_videos(self, id, path):
+        response = requests.get('https://www.iesdouyin.com/share/user/' + str(id), headers=self.__headers)
+        html = pq(response.text)
+        name = html('#pagelet-user-info > div.personal-card > div.info1 > p.nickname').text()
+        self.__create_path(path, name)
+        production = self.__trans(
+            re.compile('<div class="user-tab active tab get-list" data-type="post">(.*?)</div>').findall(response.text)[
+                0])
+        production = pq(production).text().replace(' ', '').replace('作品', '')
+        pages = int(eval(production) / 21) + 1
+        cursor = 0
+        print('共有' + str(pages) + '页')
         session = requests.Session()
-        rsp = session.get(link, headers=self.__headers)
-        tac = re.compile('<script>tac=(.*?)</script>').findall(rsp.text)[0]
-        param = {
-            'sec_uid': 'MS4wLjABAAAAAEtO1dCIZvj4VWbLU4Xce7DgVgsKNMNu88eNR2c2LtY',
-            'count': '21',
-            'max_cursor': '0',
-            'aid': '1128',
-            '_signature': 'uiHDTxAU5IhS--EyZo.-vrohw1',
-            'dytk': '2a1b5dd877dee2ad7b3fe40c26b778c4'
-        }
-        sec_uid = self.__safe_get(0, re.compile('sec_uid=(.*?)&').findall(rsp.url))
-        param['sec_uid'] = sec_uid
-        user_id = re.compile('uid: "(.*?)",').findall(rsp.text)[0]
-        _signature = 'none'
-        if sec_uid == '':
-            param['user_id'] = user_id
-        dytk = re.compile("dytk: '(.*?)'\n").findall(rsp.text)[0]
-        param['dytk'] = dytk
-        param['_signature'] = _signature
-        url = 'https://www.iesdouyin.com/web/api/v2/aweme/post/?' + urlencode(param)
+        url = "https://api.anoyi.com/douyin/user/" + str(id)
         headers = {
-            'authority': 'www.iesdouyin.com',
-            'accept': 'application/json',
-            'sec-fetch-dest': 'empty',
-            'x-requested-with': 'XMLHttpRequest',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36',
-            'sec-fetch-site': 'same-origin',
-            'sec-fetch-mode': 'cors',
-            'referer': rsp.url,
-            'accept-language': 'zh-CN,zh;q=0.9',
-            'cookie': '_ga=GA1.2.1890981537.1583055242; _gid=GA1.2.1273232001.1583055242; tt_webid=6799172811283072525; _ba=BA0.2-20200229-5199e-9KN349EE8pluQufNXg9O'
+            'Connection': 'keep-alive',
+            'Accept': '*/*',
+            'Sec-Fetch-Dest': 'empty',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36',
+            'Origin': 'https://anoyi.com',
+            'Sec-Fetch-Site': 'same-site',
+            'Sec-Fetch-Mode': 'cors',
+            'Accept-Language': 'zh-CN,zh;q=0.9'
         }
-        print(url)
-        rsp = session.get(url, headers=headers)
-        print(rsp.text)
+        response = session.get(url, headers=headers)
+        jsonText = json.loads(response.text)
+        _signature = jsonText['sign']
+        dytk = jsonText['tk']
+        for i in range(pages):
+            print('正在爬取第' + str(i + 1) + '页')
+            response = session.get('https://api.anoyi.com/douyin/post/' + str(id) + '/' + dytk + '?cursor=' + str(
+                cursor) + '&s=' + _signature, headers=headers)
+            jsonText = json.loads(response.text)
+            cursor = jsonText['max_cursor']
+            hasmore = jsonText['has_more']
+            for item in jsonText['aweme_list']:
+                title = item['desc']
+                print('正在爬取视频"' + title + '"')
+                url = item['video']['play_addr']['url_list'][0]  # 有水印视频
+                headers = {
+                    'Connection': 'keep-alive',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36',
+                    'Accept': '*/*',
+                    'Referer': url,
+                    'Accept-Language': 'zh-CN,zh;q=0.9',
+                    'Range': 'bytes=0-'
+                }
+                response = requests.get(url, headers=headers)
+                file = open(path + '/' + name + '/' + title + '.mp4', 'wb')
+                file.write(response.content)
+                file.close()
+            if hasmore == 0:
+                break
 
 
 if __name__ == '__main__':
     app = DouYinCrawl()
-    #第一个参数为个人信息链接，第二个参数为存储的位置
-    # app.get_info('https://v.douyin.com/tSnqbr/', 'data')
+    # 得到个人信息
+    # 第一个参数为个人id，第二个参数为存储的位置
+    app.get_info('108786612941', 'data')
+    # 得到个人视频
+    # 第一个参数为个人di，第二个参数为存储的位置
+    app.get_videos('108786612941', 'data')
