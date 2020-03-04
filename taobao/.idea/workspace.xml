@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="63573a5c-a7d3-464a-8c5f-6a2f643d337e" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1YES1LYOHOxSZ0AF0JhZJAf0A0V" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../toutiao" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\file\python\pythonCrawlProject\taobao\data\search" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.test">
+    <configuration name="crawl" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="taobao" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/crawl.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="taobao" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="taobao" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="trans" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="taobao" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/trans.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="transCookie" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="taobao" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Desktop" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Desktop/transCookie.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.run" />
+        <item itemvalue="Python.transCookie" />
+        <item itemvalue="Python.trans" />
+        <item itemvalue="Python.crawl" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="63573a5c-a7d3-464a-8c5f-6a2f643d337e" name="Default Changelist" comment="" />
+      <created>1582506043990</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1582506043990</updated>
+      <workItem from="1582506045439" duration="26368000" />
+      <workItem from="1582537353476" duration="8198000" />
+      <workItem from="1582605388351" duration="645000" />
+      <workItem from="1582607241374" duration="429000" />
+      <workItem from="1582607710302" duration="56000" />
+      <workItem from="1582608370269" duration="133000" />
+      <workItem from="1582623064035" duration="5694000" />
+      <workItem from="1582638444736" duration="21000" />
+      <workItem from="1582685424821" duration="6260000" />
+      <workItem from="1582692764792" duration="306000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="481" y="227" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1582690107315">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state x="481" y="227" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1500.960@0.0.1500.960" timestamp="1582690107315" />
+    <state x="531" y="236" key="FileChooserDialogImpl" timestamp="1582692770310">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state x="531" y="236" key="FileChooserDialogImpl/0.0.1500.960@0.0.1500.960" timestamp="1582692770310" />
+    <state width="1458" height="431" key="GridCell.Tab.0.bottom" timestamp="1582692746328">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state width="1458" height="431" key="GridCell.Tab.0.bottom/0.0.1500.960@0.0.1500.960" timestamp="1582692746328" />
+    <state width="1458" height="431" key="GridCell.Tab.0.center" timestamp="1582692746328">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state width="1458" height="431" key="GridCell.Tab.0.center/0.0.1500.960@0.0.1500.960" timestamp="1582692746328" />
+    <state width="1458" height="431" key="GridCell.Tab.0.left" timestamp="1582692746328">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state width="1458" height="431" key="GridCell.Tab.0.left/0.0.1500.960@0.0.1500.960" timestamp="1582692746328" />
+    <state width="1458" height="431" key="GridCell.Tab.0.right" timestamp="1582692746328">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state width="1458" height="431" key="GridCell.Tab.0.right/0.0.1500.960@0.0.1500.960" timestamp="1582692746328" />
+    <state width="1458" height="316" key="GridCell.Tab.1.bottom" timestamp="1582537332347">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state width="1458" height="316" key="GridCell.Tab.1.bottom/0.0.1500.960@0.0.1500.960" timestamp="1582537332347" />
+    <state width="1458" height="316" key="GridCell.Tab.1.center" timestamp="1582537332347">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state width="1458" height="316" key="GridCell.Tab.1.center/0.0.1500.960@0.0.1500.960" timestamp="1582537332347" />
+    <state width="1458" height="316" key="GridCell.Tab.1.left" timestamp="1582537332347">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state width="1458" height="316" key="GridCell.Tab.1.left/0.0.1500.960@0.0.1500.960" timestamp="1582537332347" />
+    <state width="1458" height="316" key="GridCell.Tab.1.right" timestamp="1582537332347">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state width="1458" height="316" key="GridCell.Tab.1.right/0.0.1500.960@0.0.1500.960" timestamp="1582537332347" />
+    <state x="434" y="305" key="com.intellij.ide.util.TipDialog" timestamp="1582692765361">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state x="434" y="305" key="com.intellij.ide.util.TipDialog/0.0.1500.960@0.0.1500.960" timestamp="1582692765360" />
+    <state x="415" y="208" width="672" height="678" key="search.everywhere.popup" timestamp="1582540842711">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state x="415" y="208" width="672" height="678" key="search.everywhere.popup/0.0.1500.960@0.0.1500.960" timestamp="1582540842711" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/taobao$test.coverage" NAME="test Coverage Results" MODIFIED="1582692703004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/taobao$run.coverage" NAME="run Coverage Results" MODIFIED="1582692396412" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/taobao$crawl.coverage" NAME="crawl Coverage Results" MODIFIED="1582687548879" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/taobao$trans.coverage" NAME="trans Coverage Results" MODIFIED="1582689087284" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/taobao$transCookie.coverage" NAME="transCookie Coverage Results" MODIFIED="1582692375357" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Desktop" />
+  </component>
+</project>
