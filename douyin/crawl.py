@@ -1,14 +1,16 @@
 # -*- coding: UTF-8 –*-
 '''
-抖音爬虫，现可以进行个人信息的爬取以及某人下的视频
+抖音爬虫，现可以进行个人信息的爬取以及某人下的视频(有水印+无水印)
 作者：洪韬
 时间：2020/3/2
 '''
-from urllib.parse import urlencode
+from urllib.parse import quote
 from pyquery import PyQuery as pq
 from docx.shared import Inches
 from docx import Document
 import requests
+import time
+import random
 import json
 import re
 import os
@@ -110,9 +112,8 @@ class DouYinCrawl:
         document.save(path + '/' + name + '/info.docx')
         os.remove(path + '/' + name + '/temp.png')
 
-    # 不可用
-    # 得到某个抖音号下的所有视频
-    def get_videos(self, id, path):
+    # 得到某个抖音号下的所有视频,water_mark用于标记是否有水印
+    def get_videos(self, id, path,water_mark=True):
         response = requests.get('https://www.iesdouyin.com/share/user/' + str(id), headers=self.__headers)
         html = pq(response.text)
         name = html('#pagelet-user-info > div.personal-card > div.info1 > p.nickname').text()
@@ -125,13 +126,14 @@ class DouYinCrawl:
         cursor = 0
         print('共有' + str(pages) + '页')
         session = requests.Session()
-        url = "https://api.anoyi.com/douyin/user/" + str(id)
+        url = "https://api.anoyi.com/api/signature/ies/" + str(id)
         headers = {
             'Connection': 'keep-alive',
             'Accept': '*/*',
             'Sec-Fetch-Dest': 'empty',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36',
             'Origin': 'https://anoyi.com',
+            'Host': 'api.anoyi.com',
             'Sec-Fetch-Site': 'same-site',
             'Sec-Fetch-Mode': 'cors',
             'Accept-Language': 'zh-CN,zh;q=0.9'
@@ -140,10 +142,14 @@ class DouYinCrawl:
         jsonText = json.loads(response.text)
         _signature = jsonText['sign']
         dytk = jsonText['tk']
+        if water_mark:
+            print('正在爬取有水印视频')
+        else:
+            print('正在爬取无水印视频')
         for i in range(pages):
             print('正在爬取第' + str(i + 1) + '页')
-            response = session.get('https://api.anoyi.com/douyin/post/' + str(id) + '/' + dytk + '?cursor=' + str(
-                cursor) + '&s=' + _signature, headers=headers)
+            url='https://api.anoyi.com/api/signature/ies/'+str(id)+'/post?tk='+dytk+'&max_cursor='+str(cursor)+'&s='+_signature
+            response = session.get(url, headers=headers)
             jsonText = json.loads(response.text)
             cursor = jsonText['max_cursor']
             hasmore = jsonText['has_more']
@@ -151,27 +157,71 @@ class DouYinCrawl:
                 title = item['desc']
                 print('正在爬取视频"' + title + '"')
                 url = item['video']['play_addr']['url_list'][0]  # 有水印视频
-                headers = {
-                    'Connection': 'keep-alive',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36',
-                    'Accept': '*/*',
-                    'Referer': url,
-                    'Accept-Language': 'zh-CN,zh;q=0.9',
-                    'Range': 'bytes=0-'
-                }
-                response = requests.get(url, headers=headers)
-                file = open(path + '/' + name + '/' + title + '.mp4', 'wb')
-                file.write(response.content)
-                file.close()
+                if water_mark:
+                    url=url.replace('/play/','/playwm/')
+                    headers = {
+                        'authority': 'aweme.snssdk.com',
+                        'sec-fetch-dest': 'video',
+                        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36',
+                        'accept': '*/*',
+                        'sec-fetch-site': 'cross-site',
+                        'sec-fetch-mode': 'no-cors',
+                        'accept-language': 'zh-CN,zh;q=0.9',
+                        'range': 'bytes=0-'
+                    }
+                    response = requests.get(url, headers=headers,allow_redirects=False)
+                    url=response.headers['location']
+                    headers = {
+                        'Connection': 'keep-alive',
+                        'Cache-Control': 'max-age=0',
+                        'Upgrade-Insecure-Requests': '1',
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                        'Accept-Language': 'zh-CN,zh;q=0.9'
+                    }
+                    response=requests.get(url,headers=headers)
+                    self.__create_path('data',name,'water_mark')
+                    file = open(path + '/' + name + '/water_mark/' + title + '.mp4', 'wb')
+                    file.write(response.content)
+                    file.close()
+                else:
+                    if os.path.exists(path + '/' + name + '/no_water_mark/' + title + '.mp4'):
+                        print('视频已存在')
+                        continue
+                    url='https://api.anoyi.com/api/video/no-watermark?url='+quote(url)
+                    headers = {
+                        'Connection': 'keep-alive',
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36',
+                        'Sec-Fetch-Dest': 'empty',
+                        'Accept': '*/*',
+                        'Origin': 'https://anoyi.com',
+                        'Sec-Fetch-Site': 'same-site',
+                        'Sec-Fetch-Mode': 'cors',
+                        'Accept-Language': 'zh-CN,zh;q=0.9',
+                        'If-None-Match': 'W/"148-8N1CAArBSSC2MpiZuqR7kZ2SBt4"'
+                    }
+                    rsp=requests.get(url,headers=headers)
+                    headers = {
+                        'Connection': 'keep-alive',
+                        'Cache-Control': 'max-age=0',
+                        'Upgrade-Insecure-Requests': '1',
+                        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                        'Accept-Language': 'zh-CN,zh;q=0.9'
+                    }
+                    response = requests.get(rsp.text, headers=headers)
+                    self.__create_path('data',name,'no_water_mark')
+                    file = open(path + '/' + name + '/no_water_mark/' + title + '.mp4', 'wb')
+                    file.write(response.content)
+                    file.close()
             if hasmore == 0:
                 break
-
-
 if __name__ == '__main__':
     app = DouYinCrawl()
     # 得到个人信息
     # 第一个参数为个人id，第二个参数为存储的位置
-    app.get_info('108786612941', 'data')
+    app.get_info('72940146352', 'data')
     # 得到个人视频
     # 第一个参数为个人di，第二个参数为存储的位置
-    app.get_videos('108786612941', 'data')
+    app.get_videos('72940146352', 'data',water_mark=False)
+    app.get_videos('72940146352', 'data',water_mark=True)
