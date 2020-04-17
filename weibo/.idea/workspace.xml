@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e858a78f-d936-4321-ab6c-65ad8a13d728" name="Default Changelist" comment="" />
+    <list default="true" id="e858a78f-d936-4321-ab6c-65ad8a13d728" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../douyin/crawl.py" beforeDir="false" afterPath="$PROJECT_DIR$/../douyin/crawl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../toutiao/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../toutiao/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +20,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1YHmCYR4pW9NJuIynHYepb7L1vE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -24,7 +33,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../toutiao" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
   </component>
   <component name="RunManager" selected="Python.crawl">
     <configuration name="crawl" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -150,6 +159,8 @@
       <workItem from="1582623054160" duration="8000" />
       <workItem from="1582784987197" duration="12677000" />
       <workItem from="1582816644677" duration="15000" />
+      <workItem from="1587030759579" duration="441000" />
+      <workItem from="1587040257739" duration="11000" />
     </task>
     <servers />
   </component>
@@ -161,10 +172,10 @@
       <screen x="0" y="0" width="1500" height="960" />
     </state>
     <state x="503" y="283" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1500.960@0.0.1500.960" timestamp="1582610410831" />
-    <state x="531" y="236" key="FileChooserDialogImpl" timestamp="1582816658443">
+    <state x="531" y="236" key="FileChooserDialogImpl" timestamp="1587040265795">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state x="531" y="236" key="FileChooserDialogImpl/0.0.1500.960@0.0.1500.960" timestamp="1582816658443" />
+    <state x="531" y="236" key="FileChooserDialogImpl/0.0.1500.960@0.0.1500.960" timestamp="1587040265795" />
     <state width="1458" height="295" key="GridCell.Tab.0.bottom" timestamp="1582801713356">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
@@ -181,10 +192,10 @@
       <screen x="0" y="0" width="1500" height="960" />
     </state>
     <state width="1458" height="295" key="GridCell.Tab.0.right/0.0.1500.960@0.0.1500.960" timestamp="1582801713356" />
-    <state x="434" y="305" key="com.intellij.ide.util.TipDialog" timestamp="1582816649825">
+    <state x="434" y="305" key="com.intellij.ide.util.TipDialog" timestamp="1587040258374">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state x="434" y="305" key="com.intellij.ide.util.TipDialog/0.0.1500.960@0.0.1500.960" timestamp="1582816649825" />
+    <state x="434" y="305" key="com.intellij.ide.util.TipDialog/0.0.1500.960@0.0.1500.960" timestamp="1587040258374" />
     <state x="413" y="209" width="672" height="678" key="search.everywhere.popup" timestamp="1582788816642">
       <screen x="0" y="0" width="1500" height="960" />
     </state>

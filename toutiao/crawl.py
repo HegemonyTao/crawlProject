@@ -6,7 +6,6 @@
 '''
 from urllib.parse import quote, urlencode
 from pyquery import PyQuery as pq
-from selenium import webdriver
 import requests
 import hashlib
 import execjs
@@ -116,6 +115,7 @@ class TouTiaoCrawl:
             'tt_webid': self.__tt_webIdCookies['tt_webid'],
             'WEATHER_CITY': quote('北京')
         }
+        self.__max_behot_time = 0
 
     def __getAsCp(self):
         text = '''
@@ -415,44 +415,79 @@ class TouTiaoCrawl:
                 rsp = requests.get(url)
                 file.write(rsp.content)
                 file.close()
-    #不可用
-    # 得到封面的第100条新闻
-    def get_news(self):
-        ascpDict = self.__getAsCp()
-        url = 'https://www.toutiao.com/api/pc/feed/?'
-        param = {
-            'max_behot_time': '0',
-            'category': '__all__',
-            'utm_source': 'toutiao',
-            'widen': '1',
-            'tadrequire': 'true',
-            'as': ascpDict['as'],
-            'cp': ascpDict['cp']
-        }
-        headers = {
-            'authority': 'www.toutiao.com',
-            'accept': 'text/javascript, text/html, application/xml, text/xml, */*',
-            'x-requested-with': 'XMLHttpRequest',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36',
-            'content-type': 'application/x-www-form-urlencoded',
-            'sec-fetch-site': 'same-origin',
-            'sec-fetch-mode': 'cors',
-            'referer': 'https://www.toutiao.com/',
-            'accept-encoding': 'gzip, deflate, br',
-            'accept-language': 'zh-CN,zh;q=0.9',
-            'cookie': 'tt_webid=' + self.__searchCookie['tt_webid'] + '; s_v_web_id=' + self.__searchCookie[
-                's_v_web_id'] + '; WEATHER_CITY=' + self.__searchCookie['WEATHER_CITY'] + '; tt_webid=' +
-                      self.__searchCookie['tt_webid'] + '; csrftoken=' + self.__searchCookie[
-                          'csrftoken'] + '; SLARDAR_WEB_ID=vn; __tasessionId=' + self.__searchCookie[
-                          '__tasessionId']
-        }
-        url = url + urlencode(
-            param) + '&_signature=3u-XCAAgEBAYuC6FlgFsTd7v1hAAIDAGpWj0LRF4Nud9cYl17i0tHatbBMydfB3uhFaV-Hc2j3FsnPyvbEQGKkVc1Clpp9Q1BNLIhbMwWlvw1paxzh9Plmocw92MCVyr7Mv'
-        print(url)
-        rsp = requests.get(url, headers=headers)
-        print(rsp.text)
 
+    # 得到推荐的第1000条新闻
+    def get_news(self,path):
+        if not os.path.exists(path):
+            os.mkdir(path)
+        if not os.path.exists(path + '/news'):
+            # 创建文件
+            os.mkdir(path + '/news')
+        year=time.localtime(time.time()).tm_year
+        month=time.localtime(time.time()).tm_mon
+        day=time.localtime(time.time()).tm_mday
+        file=open(path+'/news/'+str(year)+'-'+str(month)+'-'+str(day)+'.csv','w',encoding='utf-8',newline='')
+        fieldnames=['title','source','comments','tag','abstract','time']
+        writer=csv.DictWriter(file,fieldnames)
+        writer.writeheader()
+        for i in range(100):
+            time.sleep(1)
+            print('正在爬取第'+str(i+1)+'页')
+            ascpDict = self.__getAsCp()
+            url = "https://www.toutiao.com/api/pc/feed/"
+            headers = {
+                "content-type": "application/x-www-form-urlencoded",
+                "user-agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
+                "referer": "https://www.toutiao.com/"
+            }
+            headers['cookie'] = '__tasessionId=' + self.__searchCookie['__tasessionId'] + '; tt_webid=' + \
+                                self.__searchCookie[
+                                    'tt_webid'] + '; WEATHER_CITY=' + self.__searchCookie[
+                                    'WEATHER_CITY'] + '; tt_webid=' + \
+                                self.__searchCookie[
+                                    'tt_webid'] + '; csrftoken=' + self.__searchCookie['csrftoken'] + '; s_v_web_id=' + \
+                                self.__searchCookie['s_v_web_id']
 
+            if self.__max_behot_time == 0:
+                behot_time = "min_behot_time"
+            else:
+                behot_time = "max_behot_time"
+            params = {
+                behot_time: self.__max_behot_time,
+                "category": "__all__",
+                "utm_source": "toutiao",
+                "widen": "1",
+                "tadrequire": "true",
+                "as": "",
+                "cp": "",
+            }
+            params['as'] = ascpDict['as']
+            params['cp'] = ascpDict['cp']
+            decode_url = url + "?" + urlencode(params)
+            decode_url = decode_url.replace("com/", "com/toutiao/")
+            data = {
+                "url": quote(decode_url)
+            }
+            _signature = requests.post('http://121.40.96.182:4007/get_sign', data=data).json()['_signature']
+            params["_signature"] = _signature
+            resp = requests.get(url, headers=headers, params=params)
+            jsonText = json.loads(resp.text)
+            self.__max_behot_time = jsonText['next']['max_behot_time']
+            all_data = jsonText['data']
+            itemDict = {}
+            for data in all_data:
+                itemDict['title'] = self.__safe_get('title', data)
+                itemDict['source'] = self.__safe_get('source', data)
+                itemDict['comments'] = self.__safe_get('comments_count', data)
+                itemDict['tag'] = self.__safe_get('chinese_tag', data)
+                itemDict['abstract'] = self.__safe_get('abstract', data)
+                behot_time = self.__safe_get('behot_time', data)
+                local_time = time.localtime(behot_time)
+                real_time = str(local_time.tm_year) + '/' + str(local_time.tm_mon) + '/' + str(
+                    local_time.tm_mday) + ' ' + str(local_time.tm_hour) + ':' + str(local_time.tm_min)
+                itemDict['time']=real_time
+                writer.writerow(itemDict)
+        file.close()
 if __name__ == '__main__':
     app = TouTiaoCrawl()
     # 搜索：第一个参数为关键字，第二个为存储的位置
@@ -461,3 +496,5 @@ if __name__ == '__main__':
     # app.get_article('https://www.toutiao.com/a6796467018682860043/', 'data')
     # 得到图片.第一个参数为链接，第二个参数为存储的位置
     # app.get_pricture('https://www.toutiao.com/a6771643217868751374/', 'data')
+    #得到首页推荐的1000条新闻
+    #app.get_news('data')

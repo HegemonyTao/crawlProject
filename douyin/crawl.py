@@ -10,6 +10,7 @@ from docx.shared import Inches
 from docx import Document
 import requests
 import time
+import urllib
 import random
 import json
 import re
@@ -122,9 +123,8 @@ class DouYinCrawl:
             re.compile('<div class="user-tab active tab get-list" data-type="post">(.*?)</div>').findall(response.text)[
                 0])
         production = pq(production).text().replace(' ', '').replace('作品', '')
-        pages = int(eval(production) / 21) + 1
         cursor = 0
-        print('共有' + str(pages) + '页')
+        print('共有'+str(production)+'个作品')
         session = requests.Session()
         url = "https://api.anoyi.com/api/signature/ies/" + str(id)
         headers = {
@@ -146,8 +146,11 @@ class DouYinCrawl:
             print('正在爬取有水印视频')
         else:
             print('正在爬取无水印视频')
-        for i in range(pages):
-            print('正在爬取第' + str(i + 1) + '页')
+        page=1
+        while True:
+            time.sleep(2)
+            print('正在爬取第' + str(page) + '页')
+            page+=1
             url='https://api.anoyi.com/api/signature/ies/'+str(id)+'/post?tk='+dytk+'&max_cursor='+str(cursor)+'&s='+_signature
             response = session.get(url, headers=headers)
             jsonText = json.loads(response.text)
@@ -158,6 +161,9 @@ class DouYinCrawl:
                 print('正在爬取视频"' + title + '"')
                 url = item['video']['play_addr']['url_list'][0]  # 有水印视频
                 if water_mark:
+                    if os.path.exists(path + '/' + name + '/water_mark/' + title + '.mp4'):
+                        print('视频已存在')
+                        continue
                     url=url.replace('/play/','/playwm/')
                     headers = {
                         'authority': 'aweme.snssdk.com',
@@ -214,14 +220,15 @@ class DouYinCrawl:
                     file = open(path + '/' + name + '/no_water_mark/' + title + '.mp4', 'wb')
                     file.write(response.content)
                     file.close()
-            if hasmore == 0:
+            if hasmore == False:
                 break
 if __name__ == '__main__':
     app = DouYinCrawl()
     # 得到个人信息
     # 第一个参数为个人id，第二个参数为存储的位置
-    app.get_info('72940146352', 'data')
+    app.get_info('50548809333', 'data')
     # 得到个人视频
-    # 第一个参数为个人di，第二个参数为存储的位置
-    app.get_videos('72940146352', 'data',water_mark=False)
-    app.get_videos('72940146352', 'data',water_mark=True)
+    # 第一个参数为个人id，第二个参数为存储的位置
+    app.get_videos('50548809333', 'data',water_mark=True)
+    app.get_videos('50548809333', 'data',water_mark=False)
+
